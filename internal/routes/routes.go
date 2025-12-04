@@ -3,16 +3,9 @@ package routes
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/kodra-pay/fee-service/internal/handlers"
-	"github.com/kodra-pay/fee-service/internal/services"
 )
 
-func Register(app *fiber.App, service string) {
-	health := handlers.NewHealthHandler(service)
+func Register(app *fiber.App, serviceName string) {
+	health := handlers.NewHealthHandler(serviceName)
 	health.Register(app)
-
-	svc := services.NewFeeService()
-	h := handlers.NewFeeHandler(svc)
-	api := app.Group("/fees")
-	api.Post("/quote", h.Quote)
-	api.Get("/rules", h.Rules)
 }
